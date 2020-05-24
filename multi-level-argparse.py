@@ -1,12 +1,7 @@
 #!/usr/bin/env python
 
 
-#
-# Based on Chase Seibert Blog post,
-# https://chase-seibert.github.io/blog/2014/03/21/python-multilevel-argparse.html
-#
 # Multi-level argparse
-#
 # It’s a common pattern for command line tools to have multiple subcommands that run off of a single executable,
 # where each subcommand has its own set of required and optional parameters.
 # This pattern is fairly easy to implement in your own Python command-line utilities using argparse.
@@ -22,7 +17,6 @@
 # Next, copy your Python script to ~/bin, to do this use the command `cp myscript ~/bin`
 # Lasty, add the ~/bin directory to your PATH using the command `export PATH=~/bin:$PATH` (only temporary). 
 # If you want your command line tool permanently available on your system, add the export command to your .zshrc or .bash_profile
-#
 
 
 import argparse

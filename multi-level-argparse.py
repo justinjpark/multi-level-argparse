@@ -63,7 +63,7 @@ The most commonly used multi-level-argparse commands are:
     # example command with optional arguments (flags)
     def command_a(self):
         parser = argparse.ArgumentParser(
-            description = '<insert description for command_a here>'
+            description='Example command with optional arguments (flags)'
         )
 
         # add additional required and/or optional arguments here
@@ -74,15 +74,23 @@ The most commonly used multi-level-argparse commands are:
 
         # now that we are inside a command, ignore the first argv and get the rest of the arguments
         args = parser.parse_args(sys.argv[2:])
+
+        # --> command behavior goes here
         print(f'Running multi-level-argparse command_a, foo={args.foo}, bar={args.bar}')
 
 
     # example command with positional/required arguments and flags
     def command_b(self):
         parser = argparse.ArgumentParser(
-            description = '<insert description for command_b here>'
+            description='Example command positional/required arguments and flags'
         )
-        parser.add_argument('subcommand', help='Subcommand to run')
+        parser.add_argument('input', help='User input to read in')
+        parser.add_argument('-f', '--foo', action='store_true', help='<insert description for foo here>')
+        parser.add_argument('-b', '--bar', action='store_true', help='<insert description for bar here>')
+
+        args = parser.parse_args(sys.argv[2:])
+
+        print(f'Running multi-level-argparse command_b, input={args.input}, foo={args.foo}, bar={args.bar}')
 
 
     # TODO: 
@@ -97,7 +105,6 @@ The most commonly used multi-level-argparse commands are:
         parser.add_argument('-n', '--dry-run', action='store_true', help='Show what would be upgraded, but do not actually upgrade anything')
 
         args = parser.parse_args(sys.argv[2:])
-
 
         # EAFP (Easier to Ask for Forgiveness than Permission)
         # try:

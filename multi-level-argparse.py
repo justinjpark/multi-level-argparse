@@ -21,7 +21,8 @@ The most commonly used multi-level-argparse commands are:
   brewups     Runs brew update, brew upgrade, and brew cask upgrade
 ''',
             # description='Multi-level argparse in Python',
-            epilog='Based on Chase Seibert Blog post, https://chase-seibert.github.io/blog/2014/03/21/python-multilevel-argparse.html')
+            epilog='Based on Chase Seibert Blog post, https://chase-seibert.github.io/blog/2014/03/21/python-multilevel-argparse.html'
+        )
         parser.add_argument('command', help='Command to run')
 
         # if there is no command specified, print the parser's help message
@@ -29,14 +30,14 @@ The most commonly used multi-level-argparse commands are:
             parser.print_help()
             exit(1)
 
-        # parse_args defaults to [1:] for args (from sys.argv), but we only need the second args to create the next parser
+        # parse_args defaults to [1:] for args (from sys.argv), but we only need the second argument to create the next parser
         # for now we will also exclude the rest of the args, otherwise the validation will fail
         args = parser.parse_args(sys.argv[1:2])
 
-        # LBYL: Look Before You Leap
+        # LBYL (Look Before You Leap)
         # validate command using dispatch list, print error message if the command is unrecognized
         dispatch = ['foo', 'bar', 'baz', 'brewups']
-        if args.command not in dispatch:
+        if args.command not in dispatch: # if not hasattr(self, args.command):
             print(f"multi-level-argparse: '{args.command}' is not a multi-level-argparse command. See 'multi-level-argparse --help'")
             exit(1)
 
@@ -76,13 +77,15 @@ The most commonly used multi-level-argparse commands are:
         print(f'Running multi-level-argparse bar, input={args.input}, blue={args.blue}, green={args.green}')
 
 
+    # using an inner/nested class to encapsulate baz methods
+    # why? in addition to encapsulation, to logically group baz methods and increase code readability
     class Baz:
 
         def __init__(self):
             parser = argparse.ArgumentParser(
                 usage='''multi-level-argparse baz <command> [<args>]
 
-baz baz baz
+Example command with another layer of subcommands
 
 The most commonly used baz commands are:
   one         <insert description here>
@@ -95,17 +98,30 @@ The most commonly used baz commands are:
                 parser.print_help()
                 exit(1)
             
+            # in this case, we only need the third argument to create the next parser
             args = parser.parse_args(sys.argv[2:3])
 
-            if not hasattr(self, args.command):
-                print(f"multi-level-argparse baz: '{args.command}' is not a multi-level-argparse baz command. See 'multi-level-argparse baz --help'")
+            # validate command using dispatch list, print error message if the command is unrecognized
+            dispatch = ['one', 'two']
+            if args.command not in dispatch:
+                print(f"multi-level-argparse: '{args.command}' is not a multi-level-argparse baz command. See 'multi-level-argparse baz --help'")
                 exit(1)
             getattr(self, args.command)()
-        
+
+
         def one(self):
+            # parser = argparse.ArgumentParser()
+            # parser.add_argument()
+            # args = parser.parse_args(sys.argv[3:])
+
             print(f'Running multi-level-argparse baz one')
 
+
         def two(self):
+            # parser = argparse.ArgumentParser()
+            # parser.add_argument()
+            # args = parser.parse_args(sys.argv[3:])
+
             print(f'Running multi-level-argparse baz two')
 
 

@@ -33,15 +33,16 @@ The most commonly used multi-level-argparse commands are:
         # for now we will also exclude the rest of the args, otherwise the validation will fail
         args = parser.parse_args(sys.argv[1:2])
 
-        # validate command, print error message if the command is unrecognized
-        if not hasattr(self, args.command):
+        # LBYL: Look Before You Leap
+        # validate command using dispatch list, print error message if the command is unrecognized
+        dispatch = ['foo', 'bar', 'baz', 'brewups']
+        if args.command not in dispatch:
             print(f"multi-level-argparse: '{args.command}' is not a multi-level-argparse command. See 'multi-level-argparse --help'")
             exit(1)
 
         # getattr(self, 'x') is equivalent to self.x
         # use dispatch pattern to invoke method with same name of the command
         getattr(self, args.command)()
-
 
     # example command with optional arguments (flags)
     def foo(self):
